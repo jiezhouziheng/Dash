@@ -2,26 +2,28 @@
 
 ## Attention Is All You Need（论文阅读01）
 
-**序列转导模型（sequence transduction models）**：
+**序列转导模型（Sequence Transduction Models）**：将一个输入序列转换（transduce）成另一个输出序列的模型。在NLP中，机器翻译、文本摘要、语音识别等任务都属于序列转导。这篇论文开篇就提到，当时最顶级的“序列转导模型”基本都是基于复杂的 RNN 或 CNN 构建的。Transformer 的提出，就是为了成为一种全新且更高效的序列转导模型。
  
-**卷积神经网络（convolutional neural networks）**：
+**卷积神经网络（Convolutional Neural Networks）**：通常用于图像识别的网络，通过“滑动窗口（卷积核）”来提取局部特征。在当时，有些研究者试图用 CNN 来代替 RNN 处理文本（因为 CNN 可以并行计算）。但论文指出 CNN 的缺点：要关联文本中距离较远的两个词，CNN 需要堆叠非常深的层数。而 Transformer 只需要一层就可以直接关联任意两个词。
 
-**循环神经网络（recurrent neural networks）**：
+**循环神经网络（Recurrent Neural Networks/RNNs）**：一种处理时间序列数据的神经网络，它按照顺序（从左到右）逐个读取输入。在 Transformer 出现之前，RNN 是处理文本的标准工具。但论文指出了它的致命弱点：因为必须等前面的词处理完，才能处理后面的词（强烈的顺序依赖），所以无法进行并行计算。这导致它在处理长文本时速度极慢，且容易遗忘远距离的信息。
 
-**注意力机制（attention mechanism）**：
+**门控循环（Gated Recurrent）**：RNN 的升级版，内部加入了“门（Gate）”机制来控制信息的保留和丢弃，最著名的代表是 LSTM（长短期记忆网络）和 GRU（门控循环单元）。论文提到，大家为了解决普通 RNN 记不住长序列的问题，发明了门控循环模型。虽然它们表现更好了，但依然没有解决“必须按顺序计算、无法并行”的根本性缺陷。
 
-**门控循环（gated recurrent）**：
+**扩展神经 GPU（Extended Neural GPU）**：一种利用卷积神经网络架构来处理序列任务的特定模型。这个词出现在论文的“背景（Background）”部分。论文把它作为对比对象提出，主要是为了说明：类似 Extended Neural GPU 这样的模型在连接输入输出的远距离词汇时，计算复杂度很高，而 Transformer 的注意力机制能把这种操作降到常数级别（O(1)）。
 
-**扩展神经 GPU（Extended Neural GPU）**：
+**序列比对 RNN（sequence aligned RNNs）**：指计算步骤与序列位置严格对齐的 RNN 模型。这是论文在解释为什么 RNN 慢时用的词。由于 RNN 的隐藏状态 h t 必须依赖上一个时间步的隐藏状态 h t−1 和当前的输入，这种“按位置严格对齐依次计算”的特性（Sequence aligned），成了制约模型训练速度的最大瓶颈。
 
-**多头注意力（Multi-Head Attention）**：由多个注意力层并行运行组成。多头注意力使模型能够共同关注来自不同位置表示子空间的信息。如果只有一个注意力，平均化会抑制这种效果。
+### 这几个是 Transformer 的核心术语
 
-**自注意（Self-attention）**：
+**注意力机制（Attention Mechanism）**：让模型在处理数据时，学会“把注意力集中在相关的重要信息上”，而忽略不重要的信息。就像人类阅读时会重点关注句子的主谓宾一样。以前的论文里，注意力机制大多只是作为 RNN 的一个辅助组件。而这篇论文极其大胆地提出：“Attention Is All You Need”，直接把 RNN 和 CNN 全扔掉，纯粹使用注意力机制来搭建整个网络。
 
-**序列比对 RNN（sequence aligned RNNs）**：
+**自注意（Self-attention）**：序列自己对自己的注意力。这是 Transformer 能够理解上下文的关键。比如在句子“The animal didn't cross the street because it was too tired”中，模型在处理“it”这个词时，通过“自注意力”会去查看句子里的所有词，发现“it”和“animal”的关联度最高，从而理解“it”指代的是“animal”。由于自注意力可以一次性看到句子中的所有词，它完美实现了**全局依赖建模**和**大规模并行计算**。
 
-**残余连接（residual connection）**：
+**多头注意力（Multi-Head Attention）**：由多个注意力层并行运行组成，把一次注意力计算分成多个“头（Heads）”同时进行。单一的自注意力机制可能只能捕捉到一种层面的联系。Transformer 采用了“多头”设计（论文中用了 8 个头），这意味着模型可以同时从多个不同的角度/空间去理解词与词的关系。比如一个头可能关注语法结构，另一个头可能关注指代关系，最后一个头可能关注词义的搭配。最后把这 8 个头的结果拼接起来，让模型的理解更加丰富立体。如果只有一个注意力，平均化会抑制这种效果。
 
-**前馈网络（Feed-Forward Networks）**：
+**残余连接（residual connection）**：将一层的输入直接绕过该层，加到该层的输出上（公式体现为 x+f(x)）。由于 Transformer 堆叠了很多层（比如 Encoder 有 6 层），如果只是一层层传下去，模型在训练时很容易出现“梯度消失”（底层学不到东西）。加入残差连接后，信息可以直接“抄近道”跨层传递，这使得训练极深的网络变得稳定且容易。在论文中，每一个“多头注意力”和每一个“前馈网络”后面都紧跟了一个残余连接和层归一化（LayerNorm）。
+
+**前馈网络（Feed-Forward Networks）**：一种最基础的全连接神经网络，信息单向向前传输。在 Transformer 的每一层里，注意力机制（自注意力）负责把各个词联合起来考虑上下文关系；而前馈网络（Position-wise Feed-Forward Networks）则是在注意力处理完之后，对每个词单独、独立地进行进一步的非线性变换和特征提取。
 
 
