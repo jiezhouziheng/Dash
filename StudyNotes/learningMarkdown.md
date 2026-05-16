@@ -18,14 +18,20 @@
 
 ## 正文：
 正常格式不需要加任何其他符号
+
 *斜体字*：`*文本*` 或者 `_文本_` (很明显要打中文的时候第一种更好)
+
 **加粗字**：`**文本**` 或者 `__文本__`（吐槽同斜体）
+
 ***加粗斜体***：`***文本***` 或者 `___文本___`（吐槽同斜体）
+
 ~~删除线~~：`~~文本~~`
+
 ## 列表：
 - 有序列表：`阿拉伯数字`+`.`+`空格`+`文字`
 - 无序列表：`-`+`空格`+`文字`（使用`*`或者`+`也可以）
-![alt text](image-2.png)
+<img width="1280" height="404" alt="image-2" src="https://github.com/user-attachments/assets/b15c5d54-716f-49f0-b8b5-e7bffaa3eaa7" />
+
 ## 块引用：
 `>`+`空格`+`文字`
 可以写多行内容放入一个块中
@@ -44,7 +50,8 @@
     return 0;
   }
   ```
-![alt text](image-1.png)
+<img width="1280" height="359" alt="image-1" src="https://github.com/user-attachments/assets/9492b5e3-8670-4b0f-a0dc-366cd1688c10" />
+
 ## 分割线：
 使用三个及以上的`*`、`-`或者`_`来创建分割线
 如下：`***********`
@@ -52,7 +59,8 @@
 ## 链接：
 `[` + `链接文本` + `]` + `(` + `链接地址` + `)`
 比如：[课程网站](https://docs.cpl.icu/)
-![alt text](image-3.png)
+<img width="1280" height="245" alt="image-3" src="https://github.com/user-attachments/assets/bd3d542c-9cdc-493e-99a5-2612ea856aaa" />
+
 ## 表格：
 使用`|`和`-`来创建表格。比如：
 在第二行必须要有形如`|---|----|---|`的内容，从而划分列数。每一格中`-`的数量是不作要求的。
@@ -61,7 +69,9 @@
 |1|张三|100|
 |2|李四|60|
 
-![alt text](image-4.png)
+<img width="1280" height="271" alt="image-4" src="https://github.com/user-attachments/assets/9c4105b3-b0bc-4251-bb71-bae06e2397aa" />
+
 ## 综合运用示例（引自助教）：
-![alt text](image-5.png)
+<img width="1280" height="648" alt="image-5" src="https://github.com/user-attachments/assets/7dc5ca27-d5a1-480c-9481-5f4a8791a8be" />
+
 堂堂一篇好笔记！🎉🎉🎉
