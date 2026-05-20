@@ -268,38 +268,7 @@ README 至少包含：
 
 ---
 
-## 8. 最小作品集目标
-
-如果只做一个项目，建议做：
-
-```text
-Agentic RAG 知识库助手
-```
-
-最低功能：
-
-- 上传 PDF/Markdown/TXT。
-- 自动切分文档。
-- 存入向量库。
-- 用户提问。
-- 检索相关内容。
-- 大模型生成答案。
-- 返回引用来源。
-- 支持 2 到 3 个工具调用。
-- 有可交互前端。
-- 有 README、截图和启动命令。
-
-推荐技术栈：
-
-- Python + FastAPI + Chroma + LangGraph + React/Streamlit
-
-或者：
-
-- TypeScript + Next.js + Vercel AI SDK + Vector DB
-
----
-
-## 9. 学习优先级
+## 8. 学习优先级
 
 建议顺序：
 
